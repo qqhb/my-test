@@ -1,0 +1,271 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mytest</groupId>
+  <artifactId>mytest</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>mytest Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <build>
+    <finalName>mytest</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <!-- 配置打包包含配置文件 -->
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+          <include>**/*.conf</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+  <properties>
+
+    <!--java version-->
+    <java-version>1.7</java-version>
+
+    <!--spring version-->
+    <org.springframework-version>3.2.0.RELEASE</org.springframework-version>
+    <org.aspectj-version>1.6.10</org.aspectj-version>
+    <org.slf4j-version>1.6.6</org.slf4j-version>
+
+    <!--jedis-->
+    <jedis.version>2.4.2</jedis.version>
+
+    <!--pring-data-mongodb-->
+    <spring-data-mongodb.version>1.2.0.RELEASE</spring-data-mongodb.version>
+
+    <!--spring-data-redis-->
+    <spring-data-redis.version>1.2.0.RELEASE</spring-data-redis.version>
+
+    <!--mybatis version-->
+    <mybatis.version>3.2.2</mybatis.version>
+    <mybatis-spring.version>1.2.0</mybatis-spring.version>
+    <mybatis-ehcache.version>1.0.3</mybatis-ehcache.version>
+
+    <!--mysql version-->
+    <mysql-connector-java.version>5.1.31</mysql-connector-java.version>
+    <druid.version>1.0.7</druid.version>
+
+    <!--tools version-->
+    <commons-lang3.version>3.3.2</commons-lang3.version>
+    <commons-io.version>2.4</commons-io.version>
+    <commons-codec.version>1.9</commons-codec.version>
+    <commons-fileupload.version>1.3.1</commons-fileupload.version>
+    <commons-beanutils.version>1.9.1</commons-beanutils.version>
+    <guava.version>17.0</guava.version>
+
+    <!--apach shiro-->
+    <org.apache.shiro-version>1.2.0</org.apache.shiro-version>
+
+    <!-- ************************* commons ******************************* -->
+    <commons-codec.version>1.6</commons-codec.version>
+    <commons-configuration.version>1.10</commons-configuration.version>
+    <commons-io.version>2.0.1</commons-io.version>
+    <commons-lang3.version>3.1</commons-lang3.version>
+    <commons-pool2.version>2.0</commons-pool2.version>
+
+  </properties>
+
+  <dependencies>
+
+    <!--spring start-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${org.springframework-version}</version>
+      <exclusions>
+        <!-- Exclude Commons Logging in favor of SLF4j -->
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${org.springframework-version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>${spring-data-redis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-mongodb</artifactId>
+      <version>${spring-data-mongodb.version}</version>
+    </dependency>
+    <!--spring end-->
+
+    <!--mybatis start-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>${mybatis.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>${mybatis-spring.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mybatis.caches</groupId>
+      <artifactId>mybatis-ehcache</artifactId>
+      <version>${mybatis-ehcache.version}</version>
+    </dependency>
+    <!--mybatis end-->
+
+    <!--mysql start-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql-connector-java.version}</version>
+    </dependency>
+    <!--mysql end-->
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>${druid.version}</version>
+    </dependency>
+
+    <!-- SHIRO START-->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${org.apache.shiro-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>${org.apache.shiro-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${org.apache.shiro-version}</version>
+    </dependency>
+
+    <!--shiro redis-->
+    <dependency>
+      <groupId>org.crazycake</groupId>
+      <artifactId>shiro-redis</artifactId>
+      <version>2.4.2.1-RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>senyint</groupId>
+      <artifactId>fastjson-cinyi</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <!--shiro redis-->
+    <dependency>
+      <groupId>org.crazycake</groupId>
+      <artifactId>shiro-redis</artifactId>
+      <version>2.4.2.1-RELEASE</version>
+    </dependency>
+    <!-- SHIRO END-->
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${org.slf4j-version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.15</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.mail</groupId>
+          <artifactId>mail</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.jms</groupId>
+          <artifactId>jms</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.sun.jdmk</groupId>
+          <artifactId>jmxtools</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.sun.jmx</groupId>
+          <artifactId>jmxri</artifactId>
+        </exclusion>
+      </exclusions>
+      <scope>runtime</scope>
+    </dependency>
+
+
+    <!-- jstl -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.1</version>
+    </dependency>
+
+
+
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+</project>

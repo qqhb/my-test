@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mytest.mapper.UserMessageMapper">
+    <select id="getUserMessagesPageList" resultType="com.mytest.domain.UserMessage">
+        select
+        um.id,
+        um.create_date  AS createDate,
+        um.type,
+        um.title,
+        um.content,
+        um.target,
+        um.status,
+        um.link_url AS linkUrl,
+        ur.read_flag AS readFlag,
+        ur.id AS messageRefId
+        from user_message_ref ur
+        left join user_message um ON ur.message_id = um.id
+        where um.del_flag = 0  AND um.status = 0 AND ur.uid = #{uid}
+        order by ur.read_flag asc, um.create_date desc
+    </select>
+</mapper>

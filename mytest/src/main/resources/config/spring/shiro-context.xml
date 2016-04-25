@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="propertyConfigurerRedis" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value><!--classpath:redis.properties--></value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="propertyConfigurerWeb" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <list>
+                <value><!--classpath:webconfig.properties--></value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/index"/>
+        <!--<property name="unauthorizedUrl" value="/login"/>-->
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="authenticationFilter"/>
+                <entry key="visitRole" value-ref="vistRoleFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /inquiry/clinicList = authc,visitRole[1,2,3,4,5]
+                /message/** = authc
+                /account/** = authc
+                /attention/** = authc
+                /card/** = authc
+                /doctor/getDoctorListJson = anon
+                /doctor/getHotDoctorListJson = anon
+                /doctor/detail/* = anon
+                /doctor/** = authc
+                /friend/** = authc
+                /cinyi/basic = authc
+                /user/updatePasswordSuc = anon
+                /user/newPassword = anon
+                /user/updatePassword = anon
+                /user/getPhoneValidCode = anon
+                /user/getEmailValidCode = anon
+                /user/testEmail = anon
+                /user/checkPhoneNum = anon
+                /user/** = authc
+                /inquiry/myInquiryList = authc
+                /inquiry/getMyInquiryListJson = authc
+                /inquiry/getMyClinicListJson = authc,visitRole[1,2,3,4,5]
+                /inquiry/hallList = authc,visitRole[1,2,3,4,5]
+                /inquiry/getInquiryHallListJson = authc,visitRole[1,2,3,4,5]
+                /inquiry/getInquiryListByCard = authc
+                /inquiry/getInquiryListByfriends = authc
+                /** = anon
+            </value>
+        </property>
+    </bean>
+
+    <!-- 定义应用上下文的 javax.servlet.Filter beans。这些beans 会被上面定义的shiroFilter自
+    动感知，并提供给“filterChainDefinitions”属性使用。或者也可根据需要手动的将他们添加在
+    shiroFilter bean的“filters”属性下的Map标签中。 -->
+    <bean id="authenticationFilter" class="com.mytest.shiro.filters.AuthenticationFilter"/>
+    <bean id="vistRoleFilter" class="com.mytest.shiro.filters.VisitRoleAuthorizationFilter"/>
+
+    <!--securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+
+        <!-- 单realm应用。如果需要配置多个realm，使用“realms”属性 -->
+        <property name="realm" ref="cinyiAccountRealm"/>
+
+        <!-- sessionManager -->
+        <property name="sessionManager" ref="sessionManager"/>
+
+        <!-- cacheManager -->
+        <property name="cacheManager" ref="cacheManager"/>
+
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 定义连接后台安全数据源的realm -->
+    <bean id="cinyiAccountRealm" class="com.mytest.shiro.realms.CinyiAccountRealm"/>
+
+    <!-- shiro redisManager -->
+    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+        <property name="host" value="127.0.0.1"/>
+        <property name="port" value="6379"/>
+        <property name="expire" value="1800"/>
+        <!--单位秒，30分钟-->
+        <!-- optional properties:
+        <property name="timeout" value="10000"/>
+        <property name="password" value="123456"/>
+        -->
+    </bean>
+
+    <!-- redisSessionDAO -->
+    <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+        <property name="redisManager" ref="redisManager"/>
+    </bean>
+
+    <!-- sessionManager -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="redisSessionDAO"/>
+        <property name="sessionIdCookie.name" value="DEVCINYISESSIONID"/>
+        <property name="sessionIdCookie.path" value="/"/>
+    </bean>
+
+    <!-- cacheManager -->
+    <bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager"/>
+    </bean>
+
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="cinyiweb.rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="2592000"/>
+        <!-- 单位秒，30天 -->
+    </bean>
+
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+</beans>
