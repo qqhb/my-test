@@ -55,7 +55,7 @@ public class ReverseSingleList {
         Node tmp = null;
         Node cur = null;
         // 构造一个长度为10的链表，保存头节点对象head
-        for (int i = 1; i < 3; i++) {
+        for (int i = 1; i < 10; i++) {
             tmp = new Node(i);
             if (1 == i) {
                 head.setNextNode(tmp);
