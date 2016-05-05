@@ -1,5 +1,6 @@
 package com.mytest.local.queue;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,6 +12,10 @@ public class BlockingQueueTest {
     public class Basket{
         //定义队列大小(篮子,能够容纳3个苹果)
         BlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>(3);
+
+        BlockingQueue<String> arrayBlockingQueue = new ArrayBlockingQueue<String>(2);
+
+        BlockingQueue<String> arrayBlockingQueue2 = new LinkedBlockingQueue<String>(3);
 
         /**
          * 生产苹果,放入篮子
