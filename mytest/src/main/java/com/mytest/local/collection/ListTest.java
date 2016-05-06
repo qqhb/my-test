@@ -14,7 +14,9 @@ public class ListTest {
     public static void main(String[] args){
         List list = new ArrayList();
         LinkedList list1 = new LinkedList();
-        addNumber(5);
+        double numa = 5.12;
+
+       // addNumber(5);
 
 
     }

@@ -16,7 +16,7 @@
 
 <body>
 <div>
-    欢迎${userLogin.userName}同学,您的访问!
+     欢迎${userLogin.userName}同学,您的访问!
 </div>
 
 <label> <a href="javaScript:getMessage();"> 点我看消息 </a> </label> </br>
